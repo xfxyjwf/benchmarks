@@ -1,6 +1,6 @@
 [submodule "protobuf"]
 	path = protobuf
-	url = https://github.com/xf/protobuf.git
+	url = https://github.com/xfxyjwf/protobuf.git
 [submodule "benchmark"]
 	path = benchmark
 	url = https://github.com/google/benchmark.git
