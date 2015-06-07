@@ -1,5 +1,7 @@
 # Benchmarks for Protocol Buffers and Thrift.
 
+[![Build Status](https://travis-ci.org/xfxyjwf/benchmarks.svg)](https://travis-ci.org/xfxyjwf/benchmarks) 
+
 ## How to run the benchmark
 
   1. Clone the repository:
