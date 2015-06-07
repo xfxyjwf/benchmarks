@@ -6,23 +6,23 @@ set(CMAKE_BUILD_TYPE Release)
 
 add_subdirectory(third_party/benchmark)
 
-set(BUILD_TESTING OFF)
+set(BUILD_TESTING OFF CACHE BOOL "Turn off options.")
 add_subdirectory(third_party/protobuf/cmake)
 
 # Turn off features not needed in the benchmark.
-set(BUILD_EXAMPLES OFF)
-set(WITH_STATIC_LIB OFF)
-set(WITH_JAVA OFF)
-set(WITH_PYTHON OFF)
-set(WITH_C_GLIB OFF)
-set(WITH_STDTHREADS OFF)
-set(WITH_BOOSTTHREADS OFF)
-set(WITH_ZLIB OFF)
-set(WITH_LIBEVENT OFF)
-set(WITH_OPENSSL OFF)
+set(BUILD_EXAMPLES OFF CACHE BOOL "Turn off options.")
+set(WITH_STATIC_LIB OFF CACHE BOOL "Turn off options.")
+set(WITH_JAVA OFF CACHE BOOL "Turn off options.")
+set(WITH_PYTHON OFF CACHE BOOL "Turn off options.")
+set(WITH_C_GLIB OFF CACHE BOOL "Turn off options.")
+set(WITH_STDTHREADS OFF CACHE BOOL "Turn off options.")
+set(WITH_BOOSTTHREADS OFF CACHE BOOL "Turn off options.")
+set(WITH_ZLIB OFF CACHE BOOL "Turn off options.")
+set(WITH_LIBEVENT OFF CACHE BOOL "Turn off options.")
+set(WITH_OPENSSL OFF CACHE BOOL "Turn off options.")
+set(WITH_QT4 OFF CACHE BOOL "Turn off options.")
+set(WITH_QT5 OFF CACHE BOOL "Turn off options.")
 add_subdirectory(third_party/thrift)
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 add_custom_command(
     OUTPUT src/proto/message.pb.cc src/proto/message.pb.h

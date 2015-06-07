@@ -4,7 +4,7 @@ language:
   - cpp
 
 before_install:
-  - sh third_party/thrift/build/travis/installCXXDependencies.sh
+  - sh .travis_setup.sh
 
 script:
-  - "./build_and_run.sh"
+  - sh .build_and_run.sh
