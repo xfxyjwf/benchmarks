@@ -1,9 +1,9 @@
 [submodule "protobuf"]
-	path = protobuf
+	path = thrift/protobuf
 	url = https://github.com/xfxyjwf/protobuf.git
 [submodule "benchmark"]
-	path = benchmark
+	path = third_party/benchmark
 	url = https://github.com/google/benchmark.git
 [submodule "thrift"]
-	path = thrift
+	path = third_party/thrift
 	url = https://git-wip-us.apache.org/repos/asf/thrift.git
