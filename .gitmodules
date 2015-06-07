@@ -1,6 +1,6 @@
 [submodule "protobuf"]
 	path = third_party/protobuf
-	url = https://github.com/xfxyjwf/protobuf.git
+	url = https://github.com/google/protobuf.git
 [submodule "benchmark"]
 	path = third_party/benchmark
 	url = https://github.com/google/benchmark.git
