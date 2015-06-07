@@ -4,6 +4,7 @@
 
 #include "benchmark/benchmark.h"
 #include "proto/message.pb.h"
+#include "generator/testdata.pb.h"
 #include "thrift/message_types.h"
 #include "thrift/protocol/TBinaryProtocol.h"
 #include "thrift/transport/TBufferTransports.h"
@@ -16,36 +17,29 @@ using std::endl;
 using apache::thrift::transport::TMemoryBuffer;
 using apache::thrift::protocol::TBinaryProtocol;
 
+testdata::DataSet dataset_;
+
+void InitializeData(testdata::DataSet&& dataset) {
+  dataset_.Swap(&dataset);
+}
+
 string GetProtoAllTypes() {
-  proto::TestAllTypes message;
-  message.set_bool_value(true);
-  message.set_int32_value(1234);
-  message.set_int64_value(12345678901234LL);
-  message.set_string_value("Test hello world!");
-  message.set_bytes_value("Some string data.");
-  message.mutable_message_value()->set_int32_value(5678);
-  return message.SerializeAsString();
+  return dataset_.protobuf_data();
 }
 
 string GetThriftAllTypes() {
-  thrift::TestAllTypes message;
-  message.bool_value = false;
-  message.int32_value = 1234;
-  message.int64_value = 12345678901234LL;
-  message.string_value = "Test hello world!";
-  message.bytes_value = "Some string data.";
-  message.message_value.reset(new thrift::TestAllTypes());
-  message.message_value->int32_value = 5678;
-  boost::shared_ptr<TMemoryBuffer> buffer(new TMemoryBuffer());
-  boost::shared_ptr<TBinaryProtocol> protocol(new TBinaryProtocol(buffer));
-  message.write(protocol.get());
-  uint32_t length = buffer->writeEnd();
-  return buffer->readAsString(length);
+  return dataset_.thrift_data();
 }
 
 void PrintInformation() {
   cout << "Proto size: " << GetProtoAllTypes().size() << endl;
   cout << "Thrift size: " << GetThriftAllTypes().size() << endl;
+  // proto::TestAllTypes message;
+  // message.ParseFromString(GetProtoAllTypes());
+  // cout << "Message structure: " << endl;
+  // cout << "============================" << endl;
+  // cout << message.DebugString() << endl;
+  // cout << "============================" << endl;
 }
 
 // Do everything except parsing. Offset the CPU time result of this benchmark
@@ -61,7 +55,7 @@ void BM_Proto_ParseAllTypes_Empty(benchmark::State& state) {
     }
     total_bytes += data.size();
   }
-  state.SetBytesProcessed(total_bytes);
+  // state.SetBytesProcessed(total_bytes);
 }
 BENCHMARK(BM_Proto_ParseAllTypes_Empty);
 
@@ -96,7 +90,7 @@ void BM_Thrift_ParseAllTypes_Empty(benchmark::State& state) {
     }
     total_bytes += data.size();
   }
-  state.SetBytesProcessed(total_bytes);
+  // state.SetBytesProcessed(total_bytes);
 }
 BENCHMARK(BM_Thrift_ParseAllTypes_Empty);
 
@@ -123,6 +117,18 @@ BENCHMARK(BM_Thrift_ParseAllTypes);
 }  // namespace benchmarks
 
 int main(int argc, const char* argv[]) {
+  benchmarks::testdata::DataSet dataset;
+  if (dataset.ParseFromIstream(&std::cin)) {
+    if (dataset.protobuf_data().empty() || dataset.thrift_data().empty()) {
+      std::cerr << "Invalid dataset." << std::endl;
+      return -1;
+    }
+    benchmarks::InitializeData(std::move(dataset));
+  } else {
+    std::cerr << "Cannot read dataset from stdin." << std::endl;
+    return -1;
+  }
+
   benchmark::Initialize(&argc, argv);
 
   benchmarks::PrintInformation();

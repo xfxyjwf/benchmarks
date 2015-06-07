@@ -8,5 +8,12 @@ message TestAllTypes {
   optional int64 int64_value = 3;
   optional string string_value = 4;
   optional bytes bytes_value = 5;
-  optional TestAllTypes message_value = 6;
+
+  repeated bool repeated_bool_value = 101;
+  repeated int32 repeated_int32_value = 102;
+  repeated int64 repeated_int64_value = 103;
+  repeated string repeated_string_value = 104;
+  repeated bytes repeated_bytes_value = 105;
+
+  repeated TestAllTypes children = 201;
 }

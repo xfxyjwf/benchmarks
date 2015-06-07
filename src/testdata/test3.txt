@@ -1,0 +1,3 @@
+string_field_size: 16
+message_depth: 16
+children_size: 1

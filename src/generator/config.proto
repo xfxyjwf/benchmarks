@@ -1,0 +1,16 @@
+syntax = "proto2";
+
+package benchmarks.generator;
+
+message GeneratorConfig {
+  // Size of string and bytes fields.
+  optional int32 string_field_size = 2;
+
+  // Size of repeated fields.
+  optional int32 repeated_field_size = 3;
+
+  // Depth of nested messages.
+  optional int32 message_depth = 4;
+  // Number of children of each non-leaf node.
+  optional int32 children_size = 5;
+}

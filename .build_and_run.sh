@@ -6,6 +6,4 @@ cmake --version
 
 mkdir build
 cd build
-cmake -DBUILD_TESTING=OFF ..
-make -j4 benchmarks
-./benchmarks
+make -j4 run_benchmarks

@@ -1,0 +1,8 @@
+syntax = "proto2";
+
+package benchmarks.testdata;
+
+message DataSet {
+  optional bytes protobuf_data = 1;
+  optional bytes thrift_data = 2;
+}
