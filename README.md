@@ -17,7 +17,7 @@
 
         $ mkdir build
         $ cd build
-        $ cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF ..
+        $ cmake ..
         $ make -j benchmarks
         $ ./benchmarks
 
