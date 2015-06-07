@@ -24,6 +24,8 @@ set(WITH_QT4 OFF CACHE BOOL "Turn off options.")
 set(WITH_QT5 OFF CACHE BOOL "Turn off options.")
 add_subdirectory(third_party/thrift)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
 add_custom_command(
     OUTPUT src/proto/message.pb.cc src/proto/message.pb.h
     DEPENDS protoc src/proto/message.proto
