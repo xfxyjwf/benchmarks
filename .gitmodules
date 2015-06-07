@@ -1,5 +1,5 @@
 [submodule "protobuf"]
-	path = thrift/protobuf
+	path = third_party/protobuf
 	url = https://github.com/xfxyjwf/protobuf.git
 [submodule "benchmark"]
 	path = third_party/benchmark
