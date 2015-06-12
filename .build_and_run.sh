@@ -7,4 +7,5 @@ cmake --version
 mkdir build
 cd build
 cmake ..
-make -j4 run_benchmarks
+make -j4
+make run_benchmarks

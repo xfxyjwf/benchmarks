@@ -2,6 +2,8 @@ syntax = "proto2";
 
 package benchmarks.proto;
 
+option cc_enable_arenas = true;
+
 message TestAllTypes {
   optional bool bool_value = 1;
   optional int32 int32_value = 2;

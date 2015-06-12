@@ -20,5 +20,6 @@
         $ mkdir build
         $ cd build
         $ cmake ..
-        $ make -j run_benchmarks
+        $ make -j
+        $ make run_benchmarks
 

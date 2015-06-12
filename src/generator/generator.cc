@@ -193,6 +193,7 @@ int main(int argc, char* argv[]) {
   }
 
   DataSet dataset;
+  dataset.mutable_config()->CopyFrom(config);
   dataset.set_protobuf_data(ProtobufDataGenerator(config).Generate());
   dataset.set_thrift_data(ThriftDataGenerator(config).Generate());
 

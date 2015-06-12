@@ -32,8 +32,12 @@ string GetThriftAllTypes() {
 }
 
 void PrintInformation() {
+  cout << "================== Config ====================" << endl;
   cout << "Proto size: " << GetProtoAllTypes().size() << endl;
   cout << "Thrift size: " << GetThriftAllTypes().size() << endl;
+  cout << "Config:" << endl;
+  cout << dataset_.config().DebugString() << endl;
+  cout << "==============================================" << endl;
   // proto::TestAllTypes message;
   // message.ParseFromString(GetProtoAllTypes());
   // cout << "Message structure: " << endl;
@@ -72,6 +76,55 @@ void BM_Proto_ParseAllTypes(benchmark::State& state) {
   state.SetBytesProcessed(total_bytes);
 }
 BENCHMARK(BM_Proto_ParseAllTypes);
+
+// Do everything except parsing. Offset the CPU time result of this benchmark
+// from the result of BM_ProtoArena_ParseAllTypes to get the actual CPU time
+// used in parsing.
+void BM_ProtoArena_ParseAllTypes_Empty(benchmark::State& state) {
+  string data = GetProtoAllTypes();
+  google::protobuf::Arena arena;
+  int64_t arena_used = 0;
+  int64_t total_bytes = 0;
+  while (state.KeepRunning()) {
+    proto::TestAllTypes* message =
+      google::protobuf::Arena::CreateMessage<proto::TestAllTypes>(&arena);
+    if (message->int32_value() != 0) {
+      throw "invalid message";
+    }
+    total_bytes += data.size();
+    arena_used += data.size();
+    if (arena_used > 1 * 1024 * 1024) {
+      arena.Reset();
+    }
+  }
+  // state.SetBytesProcessed(total_bytes);
+}
+BENCHMARK(BM_ProtoArena_ParseAllTypes_Empty);
+
+void BM_ProtoArena_ParseAllTypes(benchmark::State& state) {
+  static char buffer[4096];
+  google::protobuf::ArenaOptions options;
+  options.initial_block = buffer;
+  options.initial_block_size = sizeof(buffer);
+  google::protobuf::Arena arena(options);
+  int64_t arena_used = 0;
+  string data = GetProtoAllTypes();
+  int64_t total_bytes = 0;
+  while (state.KeepRunning()) {
+    proto::TestAllTypes* message =
+      google::protobuf::Arena::CreateMessage<proto::TestAllTypes>(&arena);
+    if (!message->ParseFromString(data)) {
+      throw "proto parsing failed.";
+    }
+    total_bytes += data.size();
+    arena_used += data.size();
+    if (arena_used > 1 * 1024 * 1024) {
+      arena.Reset();
+    }
+  }
+  state.SetBytesProcessed(total_bytes);
+}
+BENCHMARK(BM_ProtoArena_ParseAllTypes);
 
 // Do everything except parsing. Offset the CPU time result of this benchmark
 // from the result of BM_Thrift_ParseAllTypes to get the actual CPU time used

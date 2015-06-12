@@ -2,7 +2,10 @@ syntax = "proto2";
 
 package benchmarks.testdata;
 
+import "generator/config.proto";
+
 message DataSet {
-  optional bytes protobuf_data = 1;
-  optional bytes thrift_data = 2;
+  optional benchmarks.generator.GeneratorConfig config = 1;
+  optional bytes protobuf_data = 2;
+  optional bytes thrift_data = 3;
 }

@@ -1,3 +1,4 @@
-string_field_size: 16
+# string_field_size: 16
+repeated_field_size: 8
 message_depth: 8 
 children_size: 2
