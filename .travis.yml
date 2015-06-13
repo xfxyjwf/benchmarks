@@ -5,6 +5,10 @@ language:
 
 before_install:
   - sh .travis_setup.sh
+  - sudo pip install cpp-coveralls
 
 script:
   - sh .build_and_run.sh
+
+after_success:
+  - coveralls --gcov-options '\-lp'
