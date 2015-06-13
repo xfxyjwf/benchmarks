@@ -1,6 +1,6 @@
 # Benchmarks for Protocol Buffers and Thrift.
 
-[![Build Status](https://travis-ci.org/xfxyjwf/benchmarks.svg)](https://travis-ci.org/xfxyjwf/benchmarks) 
+[![Build Status](https://travis-ci.org/xfxyjwf/benchmarks.svg)](https://travis-ci.org/xfxyjwf/benchmarks) [![Coverage Status](https://coveralls.io/repos/xfxyjwf/benchmarks/badge.svg)](https://coveralls.io/r/xfxyjwf/benchmarks) 
 
 ## How to run the benchmark
 
